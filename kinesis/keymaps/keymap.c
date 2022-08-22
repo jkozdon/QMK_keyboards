@@ -118,9 +118,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [DEFAULT] = LAYOUT(
            KC_NO  , KC_NO          , KC_NO         , KC_NO         , KC_NO         , KC_NO         ,KC_NO   ,KC_NO ,KC_NO   ,
            KC_NO  , KC_NO          , KC_NO         , KC_NO         , KC_NO         , KC_NO         ,
-           KC_NO  , KC_Q           , KC_W          , TD(DANCE_E)   , TD(DANCE_R)   , TD(DANCE_T)   ,
-           KC_NO  , TD(DANCE_A)    , TD(DANCE_S)   , TD(DANCE_D)   , TD(DANCE_F)   , TD(DANCE_G)   ,
-           KC_NO  , TD(DANCE_Z)    , TD(DANCE_X)   , TD(DANCE_C)   , TD(DANCE_V)   , TD(DANCE_B)   ,
+           KC_NO  , KC_Q           , KC_W          , (KC_E)        , (KC_R)        , (KC_T)   ,
+           KC_NO  , (KC_A)         , (KC_S)        , (KC_D)        , (KC_F)        , (KC_G)   ,
+           KC_NO  , (KC_Z)         , (KC_X)        , (KC_C)        , (KC_V)        , (KC_B)   ,
                     KC_NO          , KC_NO         , KC_NO         , KC_NO  ,
 
                    KC_NO    , KC_NO  ,
@@ -129,14 +129,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO         , KC_NO          , KC_NO           , KC_NO         , KC_NO            , KC_NO  , KC_NO , KC_NO, KC_NO ,
            KC_NO         , KC_NO          , KC_NO           , KC_NO         , KC_NO            , KC_NO  ,
-           TD(DANCE_Y)   , TD(DANCE_U)    , TD(DANCE_I)     , TD(DANCE_O)   , TD(DANCE_P)      , KC_NO  ,
-           TD(DANCE_H)   , TD(DANCE_J)    , TD(DANCE_K)     , TD(DANCE_L)   , TD(DANCE_BSPACE) , KC_NO  ,
-           TD(DANCE_N)   , TD(DANCE_M)    , TD(DANCE_COMMA) , TD(DANCE_DOT) , TD(DANCE_SLASH)  , KC_NO  ,
+           (KC_Y)        , (KC_U)         , (KC_I)          , (KC_O)        , (KC_P)           , KC_NO  ,
+           (KC_H)        , (KC_J)         , (KC_K)          , (KC_L)        , (KC_BSPACE)      , KC_NO  ,
+           (KC_N)        , (KC_M)         , (KC_COMMA)      , (KC_DOT)      , (KC_SLASH)       , KC_NO  ,
                            KC_NO          , KC_NO  , KC_NO  , KC_NO         ,
 
            KC_NO  , KC_NO   ,
            KC_NO  ,
-           OSL(ONE_SHOT_LAYER), OSM(MOD_LALT), TD(DANCE_SPACE)
+           OSL(ONE_SHOT_LAYER), OSM(MOD_LGUI), TD(DANCE_SPACE)
     ),
 
 [ONE_SHOT_LAYER] = LAYOUT(
@@ -160,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO  , KC_NO   ,
            KC_NO  ,
-           TO(NUM_CTRL)    , KC_TRANSPARENT, KC_TRANSPARENT
+           TO(NUM_CTRL)    , KC_TRANSPARENT,  OSM(MOD_LALT)
     ),
 
 [NUM_CTRL] = LAYOUT(
