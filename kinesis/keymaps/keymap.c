@@ -144,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO  , KC_NO          , KC_NO          , KC_NO          , KC_NO            , KC_NO     ,
            KC_NO  , KC_ESCAPE      , KC_AT          , KC_HASH        , TD(DANCE_DOLLAR) , KC_PERC   ,
            KC_NO  , KC_TAB         , KC_UNDS        , KC_EXLM        , KC_MINUS         , KC_QUOTE  ,
-           KC_NO  , KC_TILD        , KC_TRANSPARENT , KC_TRANSPARENT , KC_PLUS          , KC_DQUO   ,
+           KC_NO  , TO(NAVIGATION) , KC_GRAVE       , KC_EQUAL       , KC_PLUS          , KC_DQUO   ,
                     KC_NO          , KC_NO          , KC_NO          , KC_NO            ,
 
                    KC_NO    , KC_NO  ,
@@ -154,8 +154,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO            , KC_NO             , KC_NO          , KC_NO          , KC_NO          , KC_NO  , KC_NO , KC_NO, KC_NO ,
            KC_NO            , KC_NO             , KC_NO          , KC_NO          , KC_NO          , KC_NO  ,
            KC_CIRC          , KC_AMPR           , KC_ASTR        , KC_SCOLON      , KC_COLON       , KC_NO  ,
-           TD(DANCE_BSLASH) , TD(DANCE_LCBR)    , TD(DANCE_RCBR) , TD(DANCE_PIPE) , KC_ENTER       , KC_NO  ,
-           TD(DANCE_LBRC)   , KC_LPRN           , KC_RPRN        , TD(DANCE_RBRC) , TO(NAVIGATION) , KC_NO  ,
+           TD(DANCE_BSLASH) , TD(DANCE_LCBR)    , TD(DANCE_RCBR) , TD(DANCE_PIPE) , KC_TRANSPARENT , KC_NO  ,
+           TD(DANCE_LBRC)   , KC_LPRN           , KC_RPRN        , TD(DANCE_RBRC) , KC_ENTER       , KC_NO  ,
                               KC_NO             , KC_NO          , KC_NO          , KC_NO          ,
 
            KC_NO  , KC_NO   ,
@@ -1062,7 +1062,7 @@ void dance_Q_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (dance_state.step) {
         case SINGLE_TAP: register_code16(KC_Q); break;
         case SINGLE_HOLD: register_code16(LCMD(KC_Q)); break;
-        case DOUBLE_TAP: register_code16(KC_Q); register_code16(KC_Q); break;
+        case DOUBLE_TAP: register_code16(KC_ESC); break;
         case DOUBLE_SINGLE_TAP: tap_code16(KC_Q); register_code16(KC_Q);
     }
 }
