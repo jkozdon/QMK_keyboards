@@ -118,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [DEFAULT] = LAYOUT(
            KC_NO  , KC_NO          , KC_NO         , KC_NO         , KC_NO         , KC_NO         ,KC_NO   ,KC_NO ,KC_NO   ,
            KC_NO  , KC_NO          , KC_NO         , KC_NO         , KC_NO         , KC_NO         ,
-           KC_NO  , KC_Q           , KC_W          , (KC_E)        , (KC_R)        , (KC_T)   ,
+           KC_NO  , TD(DANCE_Q)           , KC_W          , (KC_E)        , (KC_R)        , (KC_T)   ,
            KC_NO  , (KC_A)         , (KC_S)        , (KC_D)        , (KC_F)        , (KC_G)   ,
            KC_NO  , (KC_Z)         , (KC_X)        , (KC_C)        , (KC_V)        , (KC_B)   ,
                     KC_NO          , KC_NO         , KC_NO         , KC_NO  ,
@@ -168,7 +168,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO  , KC_NO          , KC_NO               , KC_NO               , KC_NO               , KC_NO           ,
            KC_NO  , KC_ESCAPE      , KC_MEDIA_PLAY_PAUSE , KC_MEDIA_PREV_TRACK , KC_MEDIA_NEXT_TRACK , TD(DANCE_UNDS)  ,
            KC_NO  , KC_TAB         , KC_AUDIO_MUTE       , KC_AUDIO_VOL_DOWN   , KC_AUDIO_VOL_UP     , TD(DANCE_PLUS)  ,
-           KC_NO  , TO(MISC)       , KC_KP_ASTERISK      , KC_BRIGHTNESS_DOWN  , KC_BRIGHTNESS_UP    , KC_KP_DOT       ,
+           KC_NO  , TO(MISC)       , KC_BRIGHTNESS_DOWN  , KC_BRIGHTNESS_UP    , KC_KP_ASTERISK      , KC_KP_DOT       ,
                     KC_NO          , KC_NO               , KC_NO               , KC_NO               ,
 
                    KC_NO    , KC_NO  ,
@@ -178,8 +178,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO            , KC_NO          , KC_NO           , KC_NO           , KC_NO          , KC_NO  , KC_NO , KC_NO, KC_NO ,
            KC_NO            , KC_NO          , KC_NO           , KC_NO           , KC_NO          , KC_NO  ,
            TD(DANCE_MINUS) , TD(DANCE_7)     , TD(DANCE_8)     , TD(DANCE_9)     , KC_TRANSPARENT , KC_NO  ,
-           TD(DANCE_EQUAL) , TD(DANCE_4)     , TD(DANCE_5)     , TD(DANCE_6)     , KC_ENTER       , KC_NO  ,
-           TD(DANCE_0)     , TD(DANCE_1)     , TD(DANCE_2)     , TD(DANCE_3)     , KC_TRANSPARENT , KC_NO  ,
+           TD(DANCE_EQUAL) , TD(DANCE_4)     , TD(DANCE_5)     , TD(DANCE_6)     , KC_BSPACE      , KC_NO  ,
+           TD(DANCE_0)     , TD(DANCE_1)     , TD(DANCE_2)     , TD(DANCE_3)     , KC_ENTER       , KC_NO  ,
                             KC_NO            , KC_NO           , KC_NO           , KC_NO          ,
 
            KC_NO  , KC_NO   ,
@@ -202,8 +202,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO             , KC_NO             , KC_NO        , KC_NO            , KC_NO          , KC_NO  , KC_NO , KC_NO, KC_NO ,
            KC_NO             , KC_NO             , KC_NO        , KC_NO            , KC_NO          , KC_NO  ,
            LGUI(KC_LBRACKET) , LCTL(LSFT(KC_TAB)), RCTL(KC_TAB) , LGUI(KC_RBRACKET), KC_TRANSPARENT , KC_NO  ,
-           TD(DANCE_LEFT)    , TD(DANCE_DOWN)    , TD(DANCE_UP) , TD(DANCE_RIGHT)  , KC_ENTER       , KC_NO  ,
-           KC_MS_ACCEL0      , KC_MS_ACCEL1      , KC_MS_ACCEL2 , KC_TRANSPARENT   , KC_TRANSPARENT , KC_NO  ,
+           TD(DANCE_LEFT)    , TD(DANCE_DOWN)    , TD(DANCE_UP) , TD(DANCE_RIGHT)  , KC_BSPACE      , KC_NO  ,
+           KC_MS_ACCEL0      , KC_MS_ACCEL1      , KC_MS_ACCEL2 , KC_TRANSPARENT   , KC_ENTER       , KC_NO  ,
                                KC_NO             , KC_NO        , KC_NO            , KC_NO          ,
 
            KC_NO  , KC_NO   ,
@@ -1072,7 +1072,7 @@ void dance_Q_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (dance_state.step) {
         case SINGLE_TAP: unregister_code16(KC_Q); break;
         case SINGLE_HOLD: unregister_code16(LCMD(KC_Q)); break;
-        case DOUBLE_TAP: unregister_code16(KC_Q); break;
+        case DOUBLE_TAP: unregister_code16(KC_ESC); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(KC_Q); break;
     }
     dance_state.step = 0;
