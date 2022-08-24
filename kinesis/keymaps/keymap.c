@@ -27,10 +27,10 @@ typedef struct {
 enum tap_dance_codes {
   TD_Q_ESC = 0,
   TD_SPACE_SPOTLIGHT,
-  TD_BLASH_CTRL_L,
-  TD_LCBR_CTRL_D,
-  TD_RCBR_CTRL_U,
-  TD_PIPE_CTRL_R
+  TD_BLASH_L,
+  TD_LCBR_D,
+  TD_RCBR_U,
+  TD_PIPE_R
 };
 
 td_state_t cur_dance(qk_tap_dance_state_t *state);
@@ -60,15 +60,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO  , KC_NO   ,
            KC_NO  ,
-           OSL(ONE_SHOT_LAYER), OSM(MOD_LGUI), TD(TD_SPACE_SPOTLIGHT)
+           OSL(ONE_SHOT_LAYER), OSM(MOD_LGUI), KC_SPACE
     ),
 
 [ONE_SHOT_LAYER] = LAYOUT(
            KC_NO  , KC_NO          , KC_NO          , KC_NO          , KC_NO            , KC_NO     , KC_NO   , KC_NO , KC_NO   ,
            KC_NO  , KC_NO          , KC_NO          , KC_NO          , KC_NO            , KC_NO     ,
-           KC_NO  , KC_ESCAPE      , KC_AT          , KC_HASH        , KC_DOLLAR        , KC_PERC   ,
-           KC_NO  , KC_TAB         , KC_UNDS        , KC_EXLM        , KC_MINUS         , KC_QUOTE  ,
-           KC_NO  , TO(NAVIGATION) , KC_GRAVE       , KC_EQUAL       , KC_PLUS          , KC_DQUO   ,
+           KC_NO  , KC_EXLM        , KC_AT          , KC_HASH        , KC_DOLLAR        , KC_PERC   ,
+           KC_NO  , KC_TAB         , KC_UNDS        , KC_GRAVE       , KC_MINUS         , KC_QUOTE  ,
+           KC_NO  , TO(NAVIGATION) , TO(NUM_CTRL)   , KC_EQUAL       , KC_PLUS          , KC_DQUO   ,
                     KC_NO          , KC_NO          , KC_NO          , KC_NO            ,
 
                    KC_NO    , KC_NO  ,
@@ -78,13 +78,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO               , KC_NO              , KC_NO              , KC_NO              , KC_NO          , KC_NO  , KC_NO , KC_NO, KC_NO ,
            KC_NO               , KC_NO              , KC_NO              , KC_NO              , KC_NO          , KC_NO  ,
            KC_CIRC             , KC_AMPR            , KC_ASTR            , KC_SCOLON          , KC_COLON       , KC_NO  ,
-           TD(TD_BLASH_CTRL_L) , TD(TD_LCBR_CTRL_D) , TD(TD_RCBR_CTRL_U) , TD(TD_PIPE_CTRL_R) , KC_TRANSPARENT , KC_NO  ,
-           KC_LBRC             , KC_LPRN            , KC_RPRN            , KC_RBRC            , KC_ENTER       , KC_NO  ,
-                                KC_NO              , KC_NO              , KC_NO              , KC_NO          ,
+           TD(TD_BLASH_L)      , TD(TD_LCBR_D)      , TD(TD_RCBR_U)      , TD(TD_PIPE_R)      , KC_TRANSPARENT , KC_NO  ,
+           KC_LBRC            , KC_LPRN            , KC_RPRN            , KC_RBRC            , KC_ENTER       , KC_NO  ,
+                                 KC_NO              , KC_NO              , KC_NO              , KC_NO          ,
 
-           KC_NO  , KC_NO   ,
+           KC_NO  , KC_NO      ,
            KC_NO  ,
-           TO(NUM_CTRL)    , KC_TRANSPARENT,  OSM(MOD_LALT)
+           KC_TRANSPARENT      , KC_TRANSPARENT,  OSM(MOD_LALT)
     ),
 
 [NUM_CTRL] = LAYOUT(
@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO  , KC_NO          , KC_NO               , KC_NO               , KC_NO               , KC_NO           ,
            KC_NO  , KC_ESCAPE      , KC_MEDIA_PLAY_PAUSE , KC_MEDIA_PREV_TRACK , KC_MEDIA_NEXT_TRACK , KC_UNDS         ,
            KC_NO  , KC_TAB         , KC_AUDIO_MUTE       , KC_AUDIO_VOL_DOWN   , KC_AUDIO_VOL_UP     , KC_PLUS         ,
-           KC_NO  , TO(MISC)       , KC_BRIGHTNESS_DOWN  , KC_BRIGHTNESS_UP    , KC_KP_ASTERISK      , KC_KP_DOT       ,
+           KC_NO  , KC_NO          , KC_BRIGHTNESS_DOWN  , KC_BRIGHTNESS_UP    , KC_KP_ASTERISK      , KC_KP_DOT       ,
                     KC_NO          , KC_NO               , KC_NO               , KC_NO               ,
 
                    KC_NO    , KC_NO  ,
@@ -372,9 +372,13 @@ void pipe_ctrl_r_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_Q_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_ESC),
-  [TD_BLASH_CTRL_L] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, blash_ctrl_l_finished, blash_ctrl_l_reset),
-  [TD_LCBR_CTRL_D] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lcbr_ctrl_d_finished, lcbr_ctrl_d_reset),
-  [TD_RCBR_CTRL_U] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rcbr_ctrl_u_finished, rcbr_ctrl_u_reset),
-  [TD_PIPE_CTRL_R] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pipe_ctrl_r_finished, pipe_ctrl_r_reset),
+  // [TD_BLASH_CTRL_L] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, blash_ctrl_l_finished, blash_ctrl_l_reset),
+  // [TD_LCBR_CTRL_D] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lcbr_ctrl_d_finished, lcbr_ctrl_d_reset),
+  // [TD_RCBR_CTRL_U] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rcbr_ctrl_u_finished, rcbr_ctrl_u_reset),
+  // [TD_PIPE_CTRL_R] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pipe_ctrl_r_finished, pipe_ctrl_r_reset),
+  [TD_BLASH_L] = ACTION_TAP_DANCE_DOUBLE(KC_BSLASH, KC_LEFT),
+  [TD_LCBR_D] = ACTION_TAP_DANCE_DOUBLE(KC_LCBR, KC_DOWN),
+  [TD_RCBR_U] = ACTION_TAP_DANCE_DOUBLE(KC_RCBR, KC_UP),
+  [TD_PIPE_R] = ACTION_TAP_DANCE_DOUBLE(KC_PIPE, KC_RIGHT),
   [TD_SPACE_SPOTLIGHT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space_spotlight_finished, space_spotlight_reset)
 };
