@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO               , KC_NO              , KC_NO              , KC_NO              , KC_NO          , KC_NO  ,
            KC_CIRC             , KC_AMPR            , KC_ASTR            , KC_SCOLON          , KC_COLON       , KC_NO  ,
            TD(TD_BLASH_L)      , TD(TD_LCBR_D)      , TD(TD_RCBR_U)      , TD(TD_PIPE_R)      , KC_TRANSPARENT , KC_NO  ,
-           KC_LBRC            , KC_LPRN            , KC_RPRN            , KC_RBRC            , KC_ENTER       , KC_NO  ,
+           KC_LBRC             , KC_LPRN            , KC_RPRN            , KC_RBRC            , KC_ENTER       , KC_NO  ,
                                  KC_NO              , KC_NO              , KC_NO              , KC_NO          ,
 
            KC_NO  , KC_NO      ,
