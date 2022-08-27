@@ -26,7 +26,7 @@ typedef struct {
 
 enum tap_dance_codes {
   TD_Q_ESC = 0,
-  TD_SPACE_SPOTLIGHT,
+  TD_BOOTLOADER,
   TD_BLASH_L,
   TD_LCBR_D,
   TD_RCBR_U,
@@ -35,8 +35,8 @@ enum tap_dance_codes {
 
 td_state_t cur_dance(qk_tap_dance_state_t *state);
 
-void space_spotlight_finished(qk_tap_dance_state_t *state, void *user_data);
-void space_spotlight_reset(qk_tap_dance_state_t *state, void *user_data);
+void bootloader_finished(qk_tap_dance_state_t *state, void *user_data);
+void bootloader_reset(qk_tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [DEFAULT] = LAYOUT(
@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO  , KC_NO   ,
            KC_NO  ,
-           OSL(ONE_SHOT_LAYER), OSM(MOD_LGUI), KC_SPACE
+           OSM(MOD_LGUI), OSL(ONE_SHOT_LAYER), KC_SPACE
     ),
 
 [ONE_SHOT_LAYER] = LAYOUT(
@@ -84,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO  , KC_NO      ,
            KC_NO  ,
-           KC_TRANSPARENT      , KC_TRANSPARENT,  OSM(MOD_LALT)
+           KC_TRANSPARENT      , TO(DEFAULT),  OSM(MOD_LALT)
     ),
 
 [NUM_CTRL] = LAYOUT(
@@ -108,16 +108,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO  , KC_NO   ,
            KC_NO  ,
-           KC_TRANSPARENT, KC_TRANSPARENT, OSM(MOD_RGUI)
+           KC_TRANSPARENT, KC_TRANSPARENT, TO(DEFAULT)
     ),
 
 [NAVIGATION] = LAYOUT(
-           KC_NO  , KC_NO            , KC_NO          , KC_NO       , KC_NO          , KC_NO           , KC_NO   , KC_NO , KC_NO   ,
-           KC_NO  , KC_NO            , KC_NO          , KC_NO       , KC_NO          , KC_NO           ,
-           KC_NO  , KC_ESCAPE        , KC_MS_WH_LEFT  , KC_MS_UP    , KC_MS_WH_RIGHT , KC_TRANSPARENT  ,
-           KC_NO  , KC_TAB           , KC_MS_LEFT     , KC_MS_DOWN  , KC_MS_RIGHT    , KC_TRANSPARENT  ,
-           KC_NO  , KC_MS_BTN1       , KC_MS_BTN2     , KC_MS_WH_UP , KC_MS_WH_DOWN  , KC_TRANSPARENT  ,
-                    KC_NO            , KC_NO          , KC_NO       , KC_NO          ,
+           KC_NO  , KC_NO               , KC_NO          , KC_NO       , KC_NO          , KC_NO           , KC_NO   , KC_NO , KC_NO   ,
+           KC_NO  , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO         ,
+           KC_NO  , KC_ESCAPE           , KC_MEDIA_PLAY_PAUSE , KC_MEDIA_PREV_TRACK , KC_MEDIA_NEXT_TRACK , KC_NO         ,
+           KC_NO  , KC_TAB              , KC_AUDIO_MUTE       , KC_AUDIO_VOL_DOWN   , KC_AUDIO_VOL_UP     , KC_NO         ,
+           KC_NO  , KC_MS_BTN1          , KC_MS_BTN2          , KC_MS_WH_UP         , KC_MS_WH_DOWN       , KC_NO         ,
+                    KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
 
                    KC_NO    , KC_NO  ,
                               KC_NO  ,
@@ -127,12 +127,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_NO             , KC_NO              , KC_NO        , KC_NO             , KC_NO          , KC_NO  ,
            LGUI(KC_LBRACKET) , LCTL(LSFT(KC_TAB)) , RCTL(KC_TAB) , LGUI(KC_RBRACKET) , KC_TRANSPARENT , KC_NO  ,
            KC_LEFT           , KC_DOWN            , KC_UP        , KC_RIGHT          , KC_BSPACE      , KC_NO  ,
-           KC_MS_ACCEL0      , KC_MS_ACCEL1       , KC_MS_ACCEL2 , KC_TRANSPARENT    , KC_ENTER       , KC_NO  ,
+           KC_MS_LEFT        , KC_MS_DOWN         , KC_MS_UP     , KC_MS_RIGHT       , KC_ENTER       , KC_NO  ,
                                KC_NO              , KC_NO        , KC_NO             , KC_NO          ,
 
            KC_NO  , KC_NO   ,
            KC_NO  ,
-           KC_TRANSPARENT, KC_TRANSPARENT, TD(TD_SPACE_SPOTLIGHT)
+           KC_TRANSPARENT, KC_TRANSPARENT, TO(DEFAULT)
     ),
 
 [MISC] = LAYOUT(
@@ -215,33 +215,25 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-static td_tap_t space_spotlight_state = {
+static td_tap_t bootloader_state = {
     .is_press_action = true,
     .state = TD_NONE
 };
 
-void space_spotlight_finished(qk_tap_dance_state_t *state, void *user_data) {
-    space_spotlight_state.state = cur_dance(state);
-    switch (space_spotlight_state.state) {
-        case TD_SINGLE_TAP: register_code16(KC_SPACE); break;
-        case TD_SINGLE_HOLD: register_code16(KC_SPACE); break;
-        case TD_DOUBLE_TAP: register_code16(KC_SPACE); break;
-        case TD_DOUBLE_HOLD: register_code16(LCMD(KC_O)); break;
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_SPACE); register_code16(KC_SPACE); break;
+void bootloader_finished(qk_tap_dance_state_t *state, void *user_data) {
+    bootloader_state.state = cur_dance(state);
+    switch (bootloader_state.state) {
+        case TD_TRIPLE_HOLD: register_code16(QK_BOOTLOADER); break;
         default: break;
     }
 }
 
-void space_spotlight_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (space_spotlight_state.state) {
-        case TD_SINGLE_TAP: unregister_code16(KC_SPACE); break;
-        case TD_SINGLE_HOLD: unregister_code16(KC_SPACE); break;
-        case TD_DOUBLE_TAP: unregister_code16(LCMD(KC_O)); break;
-        case TD_DOUBLE_HOLD: unregister_code16(KC_SPACE); break;
-        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_SPACE); break;
+void bootloader_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (bootloader_state.state) {
+        case TD_TRIPLE_HOLD: unregister_code16(QK_BOOTLOADER); break;
         default: break;
     }
-    space_spotlight_state.state = TD_NONE;
+    bootloader_state.state = TD_NONE;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -380,5 +372,5 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_LCBR_D] = ACTION_TAP_DANCE_DOUBLE(KC_LCBR, KC_DOWN),
   [TD_RCBR_U] = ACTION_TAP_DANCE_DOUBLE(KC_RCBR, KC_UP),
   [TD_PIPE_R] = ACTION_TAP_DANCE_DOUBLE(KC_PIPE, KC_RIGHT),
-  [TD_SPACE_SPOTLIGHT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space_spotlight_finished, space_spotlight_reset)
+  [TD_BOOTLOADER] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, bootloader_finished, bootloader_reset)
 };
