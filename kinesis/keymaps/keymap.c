@@ -7,6 +7,40 @@
 #define MISC           4
 #define EXTRA          5
 
+#undef LED_NUM_LOCK_PIN
+#undef LED_CAPS_LOCK_PIN
+#undef LED_SCROLL_LOCK_PIN
+#undef LED_COMPOSE_PIN
+
+#define LED_DEFAULT        LINE_PIN12
+#define LED_ONE_SHOT_LAYER LINE_PIN26
+#define LED_NUM_CTRL       LINE_PIN25
+#define LED_NAVIGATION     LINE_PIN24
+
+void keyboard_pre_init_user(void) {
+    setPinOutput(LINE_PIN26);
+    setPinOutput(LINE_PIN12);
+    setPinOutput(LINE_PIN25);
+    setPinOutput(LINE_PIN24);
+}
+
+bool led_update_user(led_t led_state) {
+    writePin(LED_ONE_SHOT_LAYER, !layer_state_is(ONE_SHOT_LAYER));
+    writePin(LED_DEFAULT, !layer_state_is(DEFAULT));
+    writePin(LED_NUM_CTRL, !layer_state_is(NUM_CTRL));
+    writePin(LED_NAVIGATION, !layer_state_is(NAVIGATION));
+    return false;
+}
+
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    writePin(LED_ONE_SHOT_LAYER, !layer_state_is(ONE_SHOT_LAYER));
+    writePin(LED_DEFAULT, !layer_state_is(DEFAULT));
+    writePin(LED_NUM_CTRL, !layer_state_is(NUM_CTRL));
+    writePin(LED_NAVIGATION, !layer_state_is(NAVIGATION));
+return state;
+}
+
 typedef enum {
     TD_NONE,
     TD_UNKNOWN,
@@ -90,9 +124,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [NUM_CTRL] = LAYOUT(
            KC_NO  , KC_NO          , KC_NO               , KC_NO               , KC_NO               , KC_NO           , KC_NO   , KC_NO , KC_NO   ,
            KC_NO  , KC_NO          , KC_NO               , KC_NO               , KC_NO               , KC_NO           ,
-           KC_NO  , KC_ESCAPE      , KC_MEDIA_PLAY_PAUSE , KC_MEDIA_PREV_TRACK , KC_MEDIA_NEXT_TRACK , KC_UNDS         ,
-           KC_NO  , KC_TAB         , KC_AUDIO_MUTE       , KC_AUDIO_VOL_DOWN   , KC_AUDIO_VOL_UP     , KC_PLUS         ,
-           KC_NO  , KC_NO          , KC_BRIGHTNESS_DOWN  , KC_BRIGHTNESS_UP    , KC_KP_ASTERISK      , KC_KP_DOT       ,
+           KC_NO  , KC_ESCAPE      , KC_NO               , KC_E                , KC_LPRN             , KC_RPRN         ,
+           KC_NO  , KC_TAB         , KC_NO               , KC_ASTR             , KC_MINUS            , KC_SLASH        ,
+           KC_NO  , TO(NAVIGATION) , KC_NO               , KC_EQUAL            , KC_PLUS             , KC_KP_DOT       ,
                     KC_NO          , KC_NO               , KC_NO               , KC_NO               ,
 
                    KC_NO    , KC_NO  ,
@@ -101,14 +135,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO            , KC_NO          , KC_NO           , KC_NO            , KC_NO          , KC_NO  , KC_NO , KC_NO, KC_NO ,
            KC_NO            , KC_NO          , KC_NO           , KC_NO            , KC_NO          , KC_NO  ,
-           KC_MINUS         , KC_7           , KC_8            , KC_9             , KC_TRANSPARENT , KC_NO  ,
-           KC_EQUAL         , KC_4           , KC_5            , KC_6             , KC_BSPACE      , KC_NO  ,
+           KC_CIRC          , KC_7           , KC_8            , KC_9             , KC_TRANSPARENT , KC_NO  ,
+           KC_BSLASH        , KC_4           , KC_5            , KC_6             , KC_BSPACE      , KC_NO  ,
            KC_0             , KC_1           , KC_2            , KC_3             , KC_ENTER       , KC_NO  ,
                               KC_NO          , KC_NO           , KC_NO            , KC_NO          ,
 
            KC_NO  , KC_NO   ,
            KC_NO  ,
-           KC_TRANSPARENT, KC_TRANSPARENT, TO(DEFAULT)
+           KC_TRANSPARENT, OSL(ONE_SHOT_LAYER), TO(DEFAULT)
     ),
 
 [NAVIGATION] = LAYOUT(
@@ -132,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO  , KC_NO   ,
            KC_NO  ,
-           KC_TRANSPARENT, KC_TRANSPARENT, TO(DEFAULT)
+           KC_TRANSPARENT, OSL(ONE_SHOT_LAYER), TO(DEFAULT)
     ),
 
 [MISC] = LAYOUT(
