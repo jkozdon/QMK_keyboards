@@ -1,9 +1,9 @@
 #include QMK_KEYBOARD_H
 
 #define DEFAULT        0
-#define ONE_SHOT_LAYER 1
-#define NUM_CTRL       2
-#define NAVIGATION     3
+#define ONE_SHOT_LAYER 3
+#define NUM_CTRL       1
+#define NAVIGATION     2
 #define MISC           4
 #define EXTRA          5
 
@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                    KC_NO    , KC_NO  ,
                               KC_NO  ,
-           KC_TRANSPARENT  , KC_TRANSPARENT,  TO(DEFAULT) ,
+           KC_TRANSPARENT  , KC_TRANSPARENT,  KC_TRANSPARENT ,
 
            KC_NO            , KC_NO          , KC_NO           , KC_NO            , KC_NO          , KC_NO  , KC_NO , KC_NO, KC_NO ,
            KC_NO            , KC_NO          , KC_NO           , KC_NO            , KC_NO          , KC_NO  ,
@@ -155,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                    KC_NO    , KC_NO  ,
                               KC_NO  ,
-           KC_TRANSPARENT  , KC_TRANSPARENT,  TO(DEFAULT) ,
+           KC_TRANSPARENT  , KC_TRANSPARENT,  KC_TRANSPARENT ,
 
            KC_NO             , KC_NO              , KC_NO        , KC_NO             , KC_NO          , KC_NO  , KC_NO , KC_NO, KC_NO ,
            KC_NO             , KC_NO              , KC_NO        , KC_NO             , KC_NO          , KC_NO  ,
