@@ -118,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            KC_NO  , KC_NO      ,
            KC_NO  ,
-           KC_TRANSPARENT      , TO(DEFAULT),  OSM(MOD_LALT)
+           OSM(MOD_LALT)      , TO(DEFAULT),  TO(NUM_CTRL) 
     ),
 
 [NUM_CTRL] = LAYOUT(
